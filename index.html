@@ -1,38 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workplace Color Vision Test</title>
+    <title>Tes Penglihatan Warna</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Color Vision Test</h1>
-            <p>Enter the number you see in each circle. Complete all 10 tests.</p>
+            <h1>Tes Penglihatan Warna</h1>
+            <p>Masukkan angka yang Anda lihat di setiap lingkaran. Lengkapi semua 10 tes.</p>
             <div class="progress">
                 <div class="progress-bar" id="progressBar"></div>
-                <span class="progress-text" id="progressText">Test 1 of 10</span>
+                <span class="progress-text" id="progressText">Tes 1 dari 10</span>
             </div>
         </div>
 
         <div class="test-screen" id="testScreen">
             <div class="test-plate" id="testPlate">
-                <!-- Test image will appear here -->
+                <!-- Gambar tes akan muncul di sini -->
             </div>
             <div class="input-area">
-                <input type="number" id="numberInput" placeholder="Enter number" min="0" max="99">
-                <button onclick="checkAnswer()">Next Test</button>
+                <input type="number" id="numberInput" placeholder="Masukkan angka" min="0" max="99">
+                <button onclick="checkAnswer()">Tes Selanjutnya</button>
             </div>
         </div>
 
         <div class="results-screen" id="resultsScreen" style="display: none;">
-            <h2>Test Complete!</h2>
+            <h2>Tes Selesai!</h2>
             <div class="score" id="scoreDisplay"></div>
             <div class="result" id="resultMessage"></div>
             <div class="details" id="resultDetails"></div>
-            <button onclick="restartTest()">Take Test Again</button>
+            <button onclick="restartTest()">Ulangi Tes</button>
         </div>
     </div>
 
