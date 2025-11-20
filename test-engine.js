@@ -1,9 +1,9 @@
-// Inisialisasi tes ketika halaman dimuat
+// Initialize test when page loads
 document.addEventListener('DOMContentLoaded', function() {
     startTest();
     document.getElementById('numberInput').focus();
     
-    // Dukungan tombol Enter
+    // Enter key support
     document.getElementById('numberInput').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') {
             checkAnswer();
@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Mulai tes
+// Start the test
 function startTest() {
     currentTestIndex = 0;
     userAnswers = [];
@@ -19,62 +19,55 @@ function startTest() {
     showTest(currentTestIndex);
 }
 
-// Tampilkan tes saat ini
+// Display current test
 function showTest(testIndex) {
     const plate = testPlates[testIndex];
     const plateElement = document.getElementById('testPlate');
     
-    // Buat elemen gambar
+    // Create image element
     plateElement.innerHTML = `
-        <img src="${plate.image}" alt="Plat tes penglihatan warna ${testIndex + 1}" 
-             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=padding:20px;text-align:center;><h3>Tes ${testIndex + 1}</h3><p>Gambar tidak dapat dimuat</p><p><small>Jawaban benar: ${plate.number}</small></p></div>';">
+        <img src="${plate.image}" alt="Color vision test plate ${testIndex + 1}" 
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<div style=padding:20px;text-align:center;><h3>Test ${testIndex + 1}</h3><p>Image not loaded</p></div>';">
     `;
     
-    // Perbarui progres
+    // Update progress
     updateProgress(testIndex);
     
-    // Kosongkan input dan fokus
+    // Clear input
     document.getElementById('numberInput').value = '';
     document.getElementById('numberInput').focus();
 }
 
-// Perbarui progress bar
+// Update progress bar
 function updateProgress(testIndex) {
     const progress = ((testIndex + 1) / TOTAL_TESTS) * 100;
     document.getElementById('progressBar').style.width = progress + '%';
-    document.getElementById('progressText').textContent = `Tes ${testIndex + 1} dari ${TOTAL_TESTS}`;
+    document.getElementById('progressText').textContent = `Test ${testIndex + 1} of ${TOTAL_TESTS}`;
 }
 
-// Periksa jawaban pengguna
+// Check user's answer
 function checkAnswer() {
     const input = document.getElementById('numberInput');
     const userAnswer = parseInt(input.value);
     
-    // Validasi input
-    if (isNaN(userAnswer) || userAnswer < 0 || userAnswer > 99) {
-        alert('Harap masukkan angka antara 0 dan 99');
+    if (isNaN(userAnswer)) {
+        alert('Please enter a number');
         input.focus();
-        input.select();
         return;
     }
     
-    // Dapatkan jawaban benar untuk tes saat ini
+    // Store result
     const correctAnswer = testPlates[currentTestIndex].number;
     const isCorrect = userAnswer === correctAnswer;
     
-    // Simpan hasil dengan informasi detail
     userAnswers.push({
         testNumber: currentTestIndex + 1,
         userAnswer: userAnswer,
         correctAnswer: correctAnswer,
-        isCorrect: isCorrect,
-        plateImage: testPlates[currentTestIndex].image
+        isCorrect: isCorrect
     });
     
-    // Debug: Log ke konsol (opsional)
-    console.log(`Tes ${currentTestIndex + 1}: User memasukkan ${userAnswer}, Yang benar adalah ${correctAnswer}, Hasil: ${isCorrect ? 'BENAR' : 'SALAH'}`);
-    
-    // Pindah ke tes berikutnya atau tampilkan hasil
+    // Move to next test or show results
     currentTestIndex++;
     
     if (currentTestIndex < TOTAL_TESTS) {
@@ -84,8 +77,76 @@ function checkAnswer() {
     }
 }
 
-// Hitung dan tampilkan hasil
+// Calculate and display results
 function showResults() {
-    // Sembunyikan layar tes, tampilkan layar hasil
+    // Hide test screen, show results screen
     document.getElementById('testScreen').style.display = 'none';
-    document.getElementById('resultsScreen
+    document.getElementById('resultsScreen').style.display = 'block';
+    
+    // Calculate score
+    const correctAnswers = userAnswers.filter(answer => answer.isCorrect).length;
+    const score = (correctAnswers / TOTAL_TESTS) * 100;
+    const testDuration = Math.round((new Date() - testStartTime) / 1000);
+    
+    // Display score
+    document.getElementById('scoreDisplay').innerHTML = `
+        ${correctAnswers} / ${TOTAL_TESTS}<br>
+        <span style="font-size: 18px; color: #666;">${score.toFixed(1)}% Correct</span>
+    `;
+    
+    // Display result message
+    const resultElement = document.getElementById('resultMessage');
+    let resultClass, resultText, resultDescription;
+    
+    if (score >= 90) {
+        resultClass = 'normal-vision';
+        resultText = '✅ Normal Color Vision';
+        resultDescription = 'Your results suggest normal color vision.';
+    } else if (score >= 70) {
+        resultClass = 'mild-deficiency';
+        resultText = '⚠️ Possible Mild Color Deficiency';
+        resultDescription = 'You may have mild color vision deficiency. Consider professional testing.';
+    } else {
+        resultClass = 'strong-deficiency';
+        resultText = '❌ Possible Color Vision Deficiency';
+        resultDescription = 'Your results suggest color vision deficiency. Professional evaluation recommended.';
+    }
+    
+    resultElement.className = `result ${resultClass}`;
+    resultElement.innerHTML = `
+        <strong>${resultText}</strong><br>
+        ${resultDescription}
+    `;
+    
+    // Display detailed results
+    const detailsElement = document.getElementById('resultDetails');
+    const detailsHTML = userAnswers.map(answer => `
+        <div class="test-result">
+            Test ${answer.testNumber}: You entered <strong>${answer.userAnswer}</strong> 
+            (Correct: ${answer.correctAnswer}) 
+            ${answer.isCorrect ? '✅' : '❌'}
+        </div>
+    `).join('');
+    
+    detailsElement.innerHTML = `
+        <details>
+            <summary>View Detailed Results</summary>
+            <div class="details-content">
+                ${detailsHTML}
+                <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #ddd;">
+                    <strong>Test completed in:</strong> ${testDuration} seconds
+                </div>
+            </div>
+        </details>
+    `;
+    
+    // Scroll to results
+    document.getElementById('resultsScreen').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Restart the test
+function restartTest() {
+    document.getElementById('resultsScreen').style.display = 'none';
+    document.getElementById('testScreen').style.display = 'block';
+    startTest();
+}
