@@ -1,38 +1,38 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tes Penglihatan Warna</title>
+    <title>Workplace Color Vision Test</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Tes Penglihatan Warna</h1>
-            <p>Masukkan angka yang Anda lihat di setiap lingkaran. Lengkapi semua 10 tes.</p>
+            <h1>Color Vision Test</h1>
+            <p>Enter the number you see in each circle. Complete all 10 tests.</p>
             <div class="progress">
                 <div class="progress-bar" id="progressBar"></div>
-                <span class="progress-text" id="progressText">Tes 1 dari 10</span>
+                <span class="progress-text" id="progressText">Test 1 of 10</span>
             </div>
         </div>
 
         <div class="test-screen" id="testScreen">
             <div class="test-plate" id="testPlate">
-                <!-- Gambar tes akan muncul di sini -->
+                <!-- Test image will appear here -->
             </div>
             <div class="input-area">
-                <input type="number" id="numberInput" placeholder="Masukkan angka" min="0" max="99">
-                <button onclick="checkAnswer()">Tes Selanjutnya</button>
+                <input type="number" id="numberInput" placeholder="Enter number" min="0" max="99">
+                <button onclick="checkAnswer()">Next Test</button>
             </div>
         </div>
 
         <div class="results-screen" id="resultsScreen" style="display: none;">
-            <h2>Tes Selesai!</h2>
+            <h2>Test Complete!</h2>
             <div class="score" id="scoreDisplay"></div>
             <div class="result" id="resultMessage"></div>
             <div class="details" id="resultDetails"></div>
-            <button onclick="restartTest()">Ulangi Tes</button>
+            <button onclick="restartTest()">Take Test Again</button>
         </div>
     </div>
 
