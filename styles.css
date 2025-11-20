@@ -5,21 +5,25 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .container {
-    max-width: 600px;
-    margin: 0 auto;
     background: white;
+    border-radius: 15px;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    max-width: 500px;
+    width: 100%;
 }
 
-header {
+.header {
     text-align: center;
     margin-bottom: 30px;
 }
@@ -27,31 +31,39 @@ header {
 h1 {
     color: #333;
     margin-bottom: 10px;
+    font-size: 28px;
+}
+
+.header p {
+    color: #666;
+    margin-bottom: 20px;
 }
 
 .progress {
-    margin: 20px 0;
-    background: #eee;
+    background: #f0f0f0;
     border-radius: 10px;
     height: 20px;
+    margin: 20px 0;
     position: relative;
+    overflow: hidden;
 }
 
 .progress-bar {
     height: 100%;
-    background: #4CAF50;
+    background: linear-gradient(90deg, #4CAF50, #45a049);
     border-radius: 10px;
     width: 10%;
-    transition: width 0.3s ease;
+    transition: width 0.5s ease;
 }
 
-#progressText {
+.progress-text {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #333;
     font-weight: bold;
+    font-size: 12px;
 }
 
 .test-plate {
@@ -60,60 +72,152 @@ h1 {
     margin: 0 auto 30px;
     border-radius: 50%;
     background: white;
-    position: relative;
+    border: 4px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
-    border: 3px solid #333;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 
-.dot {
-    position: absolute;
+.test-plate img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 50%;
 }
 
-.input-section {
+.input-area {
     text-align: center;
 }
 
-input {
-    padding: 12px;
+#numberInput {
+    padding: 15px;
     font-size: 18px;
     width: 200px;
-    margin-right: 10px;
     border: 2px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
+    margin-right: 10px;
+    text-align: center;
+    transition: border-color 0.3s;
+}
+
+#numberInput:focus {
+    outline: none;
+    border-color: #4CAF50;
 }
 
 button {
-    padding: 12px 24px;
+    padding: 15px 25px;
     font-size: 16px;
-    background: #4CAF50;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 button:hover {
-    background: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-.hidden {
-    display: none;
+button:active {
+    transform: translateY(0);
 }
 
-#resultsScreen {
+.results-screen {
     text-align: center;
 }
 
-#scoreDisplay {
+.results-screen h2 {
+    color: #333;
+    margin-bottom: 20px;
     font-size: 24px;
+}
+
+.score {
+    font-size: 32px;
+    font-weight: bold;
     margin: 20px 0;
     color: #333;
 }
 
-#resultMessage {
+.result {
     font-size: 18px;
     margin: 20px 0;
     padding: 15px;
-    border-radius: 5px;
+    border-radius: 8px;
+    line-height: 1.5;
+}
+
+.details {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    text-align: left;
+}
+
+.details summary {
+    font-weight: bold;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.details-content {
+    margin-top: 10px;
+}
+
+.test-result {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .container {
+        margin: 10px;
+        padding: 20px;
+    }
+    
+    .test-plate {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .input-area {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    #numberInput {
+        width: 100%;
+        margin-right: 0;
+    }
+    
+    button {
+        width: 100%;
+    }
+}
+
+/* Result message styles */
+.normal-vision {
+    background: #e8f5e8;
+    color: #2e7d32;
+    border: 2px solid #4CAF50;
+}
+
+.mild-deficiency {
+    background: #fff3e0;
+    color: #ef6c00;
+    border: 2px solid #ff9800;
+}
+
+.strong-deficiency {
+    background: #ffebee;
+    color: #c62828;
+    border: 2px solid #f44336;
 }
